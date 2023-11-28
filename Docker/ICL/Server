@@ -1,0 +1,9 @@
+FROM rust:alpine as builder
+RUN apk add --no-cache musl-dev
+ADD dnsmesh-main/ /code/
+WORKDIR /code
+RUN cargo build --release --bin meshdns_server
+FROM alpine as runtime
+LABEL com.centurylinklabs.watchtower.enable="false"
+COPY --from=builder /code/target/release/meshdns_server /usr/bin/dnsmesh
+ENTRYPOINT ["/usr/bin/dnsmesh"]
