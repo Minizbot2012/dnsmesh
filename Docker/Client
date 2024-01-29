@@ -1,0 +1,9 @@
+FROM rustlang/rust:nightly-alpine as builder
+RUN apk add --no-cache musl-dev
+ADD . /code/
+WORKDIR /code
+RUN cargo build --release ---bin meshdns_client
+FROM alpine as runtime
+LABEL com.centurylinklabs.watchtower.enable="false"
+COPY --from=builder /code/target/release/meshdns_client /usr/bin/meshdns
+ENTRYPOINT ["/usr/bin/meshdns"]

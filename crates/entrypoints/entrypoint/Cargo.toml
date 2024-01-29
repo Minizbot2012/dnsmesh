@@ -1,0 +1,12 @@
+[package]
+name = "meshdns_entrypoint"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+domain = "0.9.3"
+socket2 = "0.5.5"
+tokio = { version = "1.35.1", features = ["full"] }
+expire_collections = { path = "../../lib/expirecollections" }
